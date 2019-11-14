@@ -1,8 +1,8 @@
 version: 2 # CircleCI version
 jobs:
-  build:
-    machine: true # Use a Linux VM instead of docker environment
-    working_directory: ~/repo # Default working directory, where your project will be cloned
+  test:
+    docker:
+      - image: circleci/node:latest
     steps:
         - checkout
         - run: docker-compose up -d
