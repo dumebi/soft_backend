@@ -9,3 +9,9 @@ jobs:
         - run: ./soft-test.sh
         - store_artifacts:
             path: ~/repo/features/fail-screenshots
+
+workflows:
+   version: 2
+   test_and_build:
+     jobs:
+       - test
