@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
   this.config.port = `${process.env.PORT}`
 } else {
   this.config.mongo = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds241895.mlab.com:41895/heroku_q2r42jlg`
-  this.config.host = `https://vast-reef-55707.herokuapp.com/v1/`
+  this.config.host = `https://backend-softcom.herokuapp.com/v1/`
   this.config.db = 'backend_test'
   this.config.amqp_url = `${process.env.CLOUDAMQP_URL}`
   this.config.port = `${process.env.PORT}`
