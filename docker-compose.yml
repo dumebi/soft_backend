@@ -42,16 +42,6 @@ services:
       - /app/node_modules
     env_file:
      - ./compose.env
-    # environment:
-    #   - JWT_SECRET=mysuperjwtsecret
-    #   - APP_NAME="backend_test"
-    #   - MONGO_DB_DEV=mongodb://mongodb/BA
-    #   - NODE_ENV=production
-    #   - REDIS_URL=redis://redis
-    #   - AMQP_URL=amqp://rabbitmq
-    #   - PORT=3050
-    #   - MAILGUN_USER="dikejude49@gmail.com"
-    #   - MAILGUN_PASS="dyke2010"
     links:
       - rabbitmq
     depends_on:
@@ -60,7 +50,8 @@ services:
       - rabbitmq
     networks:
       - test
-    command: npm run dev
+    # command: npm run dev
+    command: ['./wait-for-it.sh', 'rabbitmq:5672', '--', 'npm', 'run', 'dev']
     ports:
       - 3050:3050
 
