@@ -16,3 +16,6 @@ yarn.lock
 
 # Externals
 external/
+
+# ENV
+compose.env
