@@ -25,7 +25,6 @@ jobs:
     steps:
         - checkout
         # Maybe you need to add some config file specific to circle…
-        - run: docker-compose up && ./soft-test.sh
         - run: ./soft-test.sh
         - store_artifacts:
             path: ~/repo/features/fail-screenshots
