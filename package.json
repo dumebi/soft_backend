@@ -1,5 +1,7 @@
 {
   "name": "backend_test",
+  "description": "Backend API for softcom",
+  "image": "heroku/nodejs",
   "version": "0.0.1",
   "private": true,
   "directories": {

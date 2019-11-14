@@ -18,12 +18,13 @@ exports.config = {
 
 if (process.env.NODE_ENV === 'development') {
   this.config.mongo = `${process.env.MONGO_DB_DEV}`
+  // this.config.mongo = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds241895.mlab.com:41895/heroku_q2r42jlg`
   this.config.host = `http://localhost:${process.env.PORT}/v1/`
   this.config.db = 'backend_test'
   this.config.amqp_url = process.env.AMQP_URL
   this.config.port = `${process.env.PORT}`
 } else {
-  this.config.mongo = `${process.env.MONGO_DB_DEV}`
+  this.config.mongo = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds241895.mlab.com:41895/heroku_q2r42jlg`
   this.config.host = `https://vast-reef-55707.herokuapp.com/v1/`
   this.config.db = 'backend_test'
   this.config.amqp_url = `${process.env.CLOUDAMQP_URL}`
