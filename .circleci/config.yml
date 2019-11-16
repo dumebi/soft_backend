@@ -36,6 +36,7 @@ jobs:
         - run: docker-compose up -d
         - run: sleep 10s
         - run: ./soft-test.sh
-        - run: git remote -v
+        - run: git remote add heroku https://git.heroku.com/backend-softcom.git
+        - run: npm run heroku
         - store_artifacts:
             path: ~/repo/features/fail-screenshots
