@@ -10,6 +10,7 @@ const UserSchema = new Schema(
     // Personal Details
     username: { type: Schema.Types.String },
     email: { type: Schema.Types.String },
+    identifier: { type: Schema.Types.String },
     // Access levels
     type: { type: Schema.Types.String, enum: Object.values(UserType), default: UserType.USER, required: true },
     // Authentication

@@ -4,7 +4,7 @@ const RabbitMQ = require('./rabbitmq')
 const subscriber = require('./rabbitmq')
 
 const { addOrUpdateCache } = require('../controllers/user');
-const { sendUserToken, sendUserSignupEmail } = require('../utils/emails');
+const { sendUserToken, sendUserSignupEmail, sendQuestionAnsweredEmail } = require('../utils/emails');
 const { sendMail } = require('../utils/utils');
 require('dotenv').config();
 
@@ -74,58 +74,20 @@ module.exports = {
       subscriber.acknowledgeMessage(msg);
     }, 3);
 
-    // /**
-    //  * Token Exchange
-    //  */
-    // // Limit Buy token
-    // subscriber.consume('LIMIT_BUY', async (msg) => {
-    //   const data = JSON.parse(msg.content.toString());
-    //   const result = await TokenController.limitBuy(data.token, data.price, data.user, data.amount)
-    //   // console.log(result)
-    //   ioClient.emit('broadcast', { user: data.user, result })
-    //   subscriber.acknowledgeMessage(msg);
-    // }, 3);
-
-    // // Market Buy token
-    // subscriber.consume('MARKET_BUY', async (msg) => {
-    //   const data = JSON.parse(msg.content.toString());
-    //   const result = await TokenController.marketBuy(data.token, data.user, data.amount)
-    //   // console.log(result)
-    //   ioClient.emit('broadcast', { user: data.user, result })
-    //   subscriber.acknowledgeMessage(msg);
-    // }, 3);
-
-    // // Limit Sell token
-    // subscriber.consume('LIMIT_SELL', async (msg) => {
-    //   const data = JSON.parse(msg.content.toString());
-    //   const result = await TokenController.limitSell(data.token, data.price, data.user, data.amount)
-    //   // console.log(result)
-    //   ioClient.emit('broadcast', { user: data.user, result })
-    //   subscriber.acknowledgeMessage(msg);
-    // }, 3);
-
-    // // Market Sell token
-    // subscriber.consume('MARKET_SELL', async (msg) => {
-    //   const data = JSON.parse(msg.content.toString());
-    //   const result = await TokenController.marketSell(data.token, data.user, data.amount)
-    //   // console.log(result)
-    //   ioClient.emit('broadcast', { user: data.user, result })
-    //   subscriber.acknowledgeMessage(msg);
-    // }, 3);
+    // Send Subscribers Question Answered Mail
+    subscriber.consume('SEND_USER_STACKOVERFLOW_QUESTION_SUB_EMAIL', (msg) => {
+      const data = JSON.parse(msg.content.toString());
+      const userQuestionAnsweredBody = sendQuestionAnsweredEmail(data.question)
+      const mailparams = {
+        email: data.email,
+        body: userQuestionAnsweredBody,
+        subject: 'Question subscription'
+      };
+      sendMail(mailparams, (error, result) => {
+        console.log(error)
+        console.log(result)
+      });
+      subscriber.acknowledgeMessage(msg);
+    }, 3);
   },
-  // async socket() {
-  //   server.on('connection', (socket) => {
-  //     console.info(`Client connected [id=${socket.id}]`);
-
-  //     // Broadcast to all connected sockets
-  //     socket.on('broadcast', (message) => {
-  //       server.emit('message', message)
-  //     });
-  //     // when socket disconnects, remove it from the list:
-  //     socket.on('disconnect', () => {
-  //       // sequenceNumberByClient.delete(socket);
-  //       console.info(`Client gone [id=${socket.id}]`);
-  //     });
-  //   });
-  // }
 }

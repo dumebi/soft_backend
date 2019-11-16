@@ -2,7 +2,7 @@
 const randomstring = require('randomstring');
 const UserModel = require('../models/user.model');
 const {
-  createJWT, config, handleError, handleSuccess,
+  createJWT, config, handleError, handleSuccess, generateRandomNumbers
 } = require('../utils/utils');
 const HttpStatus = require('http-status-codes');
 const { deepCopy } = require('../controllers/user');
@@ -29,7 +29,8 @@ const AuthController = {
       const user = new UserModel({
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        identifier: generateRandomNumbers(7)
       })
 
       const jwtToken = createJWT(user.email, user._id);
@@ -39,9 +40,9 @@ const AuthController = {
       console.log('new user: %o',newUser)
 
       await Promise.all([user.save(), publisher.queue('ADD_OR_UPDATE_USER_STACKOVERFLOW_CACHE', { newUser }), publisher.queue('SEND_USER_STACKOVERFLOW_SIGNUP_EMAIL', { user })])
-      return handleSuccess(req, res, HttpStatus.OK, 'User created successfully', newUser)
+      return handleSuccess(req, res, HttpStatus.CREATED, 'User created successfully', newUser)
     } catch (error) {
-      handleError(req, res, HttpStatus.BAD_REQUEST, 'Could not create user', error)
+      handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Could not create user', error)
     }
   },
 
@@ -70,7 +71,7 @@ const AuthController = {
       await Promise.all([user.save(), publisher.queue('ADD_OR_UPDATE_USER_STACKOVERFLOW_CACHE', { newUser })])
       return handleSuccess(req, res, HttpStatus.OK, 'User signed in', newUser)
     } catch (error) {
-      return handleError(req, res, HttpStatus.BAD_REQUEST, 'Could not login user', error)
+      return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Could not login user', error)
     }
   },
 
@@ -95,7 +96,7 @@ const AuthController = {
       await Promise.all([user.save(), publisher.queue('SEND_USER_STACKOVERFLOW_TOKEN_EMAIL', { user, token })])
       return handleSuccess(req, res, HttpStatus.OK, 'Token sent', token)
     } catch (error) {
-      return handleError(req, res, HttpStatus.BAD_REQUEST, 'Error getting user', error)
+      return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Error getting user', error)
     }
   },
 
@@ -125,7 +126,7 @@ const AuthController = {
       await Promise.all([user.save(), publisher.queue('ADD_OR_UPDATE_USER_PREMIER_CACHE', { newUser })])
       return handleSuccess(req, res, HttpStatus.OK, 'Password reset', null)
     } catch (error) {
-      return handleError(req, res, HttpStatus.BAD_REQUEST, 'Error reseting password', error)
+      return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Error reseting password', error)
     }
   },
 

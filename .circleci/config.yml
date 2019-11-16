@@ -20,11 +20,10 @@
 version: 2 # CircleCI version
 jobs:
   build:
-    machine: true # Use a Linux VM instead of docker environment
+    machine: true 
     working_directory: ~/repo 
     steps:
         - checkout
-        # Maybe you need to add some config file specific to circle…
         - run: echo "MAIL_USER=$MAIL_USER" >> compose.env
         - run: echo "MAIL_PASS=$MAIL_PASS" >> compose.env
         - run: echo "JWT_SECRET=$JWT_SECRET" >> compose.env

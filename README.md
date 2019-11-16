@@ -4,10 +4,11 @@
 https://documenter.getpostman.com/view/788782/S1TYVG5V?version=latest#a65440cc-56bd-4142-b837-69628b587a52
 
 ## Backend 
-https://vast-reef-55707.herokuapp.com/v1/
+https://backend-softcom.herokuapp.com/v1/
 
 ## BUILD 
 To run locally, type `docker-compose up --build`
+
 To run tests, open a new console with the app running. type `./soft-test.sh`
 
 

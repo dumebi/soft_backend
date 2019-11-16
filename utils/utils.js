@@ -70,7 +70,10 @@ exports.sendMail = (params, callback) => {
   });
 };
 
-exports.generateTransactionReference = (x) => {
+/**
+ * Generate random numbers
+ */
+exports.generateRandomNumbers = (x) => {
   // 463309364588305
   let text = '';
   const possible = '0123456789';

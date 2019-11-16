@@ -6,6 +6,7 @@ const QuestionSchema = new Schema(
       ref: 'User',
       required: true
     },
+    title: { type: Schema.Types.String, required: true },
     text: { type: Schema.Types.String },
     votes: { type: Schema.Types.Number, default: 0 },
     tags: [{ type: Schema.Types.String }],

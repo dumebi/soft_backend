@@ -29,7 +29,7 @@ const UserController = {
       }
       return handleSuccess(req, res, HttpStatus.OK, 'Users retrieved', users)
     } catch (error) {
-      return handleError(req, res, HttpStatus.BAD_REQUEST, 'Could not get users', error)
+      return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Could not get users', error)
     }
   },
 
@@ -41,9 +41,6 @@ const UserController = {
      */
   async one(req, res, next) {
     try {
-      if (paramsNotValid(req.params.id)) {
-        return handleError(req, res, HttpStatus.PRECONDITION_FAILED, paramsNotValidChecker(req.params.id), null)
-      }
       const _id = req.params.id;
       const user = await UserModel.findById(_id);
 
@@ -52,7 +49,7 @@ const UserController = {
       }
       return handleError(req, res, HttpStatus.NOT_FOUND,  'User not found', null)
     } catch (error) {
-      return handleError(req, res, HttpStatus.BAD_REQUEST, 'Error getting user', error)
+      return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Error getting user', error)
     }
   },
 
@@ -64,9 +61,6 @@ const UserController = {
    */
   async update(req, res, next) {
     try {
-      if (paramsNotValid(req.params.id)) {
-        return handleError(req, res, HttpStatus.PRECONDITION_FAILED, paramsNotValidChecker(req.params.id), null)
-      }
       const _id = req.params.id;
       delete req.body.password
       delete req.body.token
@@ -83,7 +77,7 @@ const UserController = {
       }
       return handleError(req, res, HttpStatus.NOT_FOUND, 'User not found', null)
     } catch (error) {
-      return handleError(req, res, HttpStatus.BAD_REQUEST, 'Error updating user', error)
+      return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Error updating user', error)
     }
   },
 
@@ -104,7 +98,7 @@ const UserController = {
   
         return handleSuccess(req, res, HttpStatus.OK, 'Password changed successfully', newUser)
       } catch (error) {
-        return handleError(req, res, HttpStatus.BAD_REQUEST, 'Error changing password', error)
+        return handleError(req, res, HttpStatus.INTERNAL_SERVER_ERROR, 'Error changing password', error)
       }
     },
 

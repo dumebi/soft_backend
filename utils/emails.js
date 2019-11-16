@@ -22,7 +22,7 @@ exports.emailBody = (partialBody) => {
                 </div>
                 ${partialBody}
                 <p style="margin-bottom: 2em;line-height: 26px;font-size: 14px;">
-                    For further questions, you can contact <strong Stackoverflow Support</strong>
+                    For further questions, you can contact support@stackoverflowclone.com
                 </p>
                 <p style="margin-bottom: 2em;line-height: 26px;font-size: 14px;">
                     Cheers, <br>
@@ -62,6 +62,21 @@ exports.sendUserSignupEmail = (user) => {
             We are so glad to have you here, ${user.username}.<br>
         </p>
         
+    `;
+  return this.emailBody(partialBody);
+}
+
+
+/**
+ * send a user question answered email
+ * @param {object} user
+ */
+exports.sendQuestionAnsweredEmail = (question, link) => {
+  const partialBody = `
+        <h3>An answer to ${question} has been provided</h3>
+        <p style="margin-bottom: 2em;line-height: 26px;font-size: 14px;">
+            You are receiving this mail because you subscribed to this question
+        </p>
     `;
   return this.emailBody(partialBody);
 }
