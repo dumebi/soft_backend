@@ -12,9 +12,8 @@ To run locally, type `docker-compose up --build`
 To run tests, open a new console with the app running. type `./soft-test.sh`
 
 
+# Assessment
 Implement a simple clone of “**Stackoverflow**”. Features to be focused on are: 
-
-# User Roles
 
 - **User** can
   - signup/login
