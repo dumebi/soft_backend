@@ -1,7 +1,7 @@
-# Software Developer Application Test
+# Softcom Developer Application Test
 
 ## Live Postman Docs 
-https://documenter.getpostman.com/view/788782/S1TYVG5V?version=latest#a65440cc-56bd-4142-b837-69628b587a52
+https://documenter.getpostman.com/view/788782/S1TYVG5V
 
 ## Backend 
 https://backend-softcom.herokuapp.com/v1/

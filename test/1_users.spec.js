@@ -2,17 +2,11 @@
 const mongoose = require('mongoose');
 const expect = require('chai').expect
 const supertest = require('supertest')
-const http = require('http');
-const app = require('../server')
-require('dotenv').config();
 const { config } = require('../utils/utils');
-
-const UserModel = require('../models/user.model');
-
 const api = supertest(`${config.host}`)
 console.log(`${config.host}`)
 
-describe('Admin Test', () => {
+describe('Auth Test', () => {
   let user_id = ''
   let user_jwt = ''
   let rec_token = ''
@@ -39,6 +33,7 @@ describe('Admin Test', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.equal('success')
+        expect(res.body.message).to.equal('User created successfully')
         expect(res.body.data._id).to.have.lengthOf.above(0)
         expect(res.body.data.email).to.equal(email)
         expect(res.body.data.username).to.equal(username)
@@ -60,6 +55,7 @@ describe('Admin Test', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.equal('success')
+        expect(res.body.message).to.equal('User signed in')
         expect(res.body.data.email).to.equal(email)
         expect(res.body.data.password).to.not.equal(password)
         user_jwt = res.body.data.token
@@ -77,6 +73,7 @@ describe('Admin Test', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.equal('success')
+        expect(res.body.message).to.equal('Token sent')
         expect(res.body.data.length).to.equal(5)
         rec_token = res.body.data
         done()
@@ -96,6 +93,7 @@ describe('Admin Test', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.equal('success')
+        expect(res.body.message).to.equal('Password reset')
         expect(res.body.data).to.equal(null)
         done()
       })
@@ -109,6 +107,7 @@ describe('Admin Test', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.equal('success')
+        expect(res.body.message).to.equal('User retrieved')
         expect(res.body.data).to.be.instanceof(Object)
         done()
       })
@@ -122,6 +121,7 @@ describe('Admin Test', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.equal('success')
+        expect(res.body.message).to.equal('Users retrieved')
         expect(res.body.data).to.be.instanceof(Array)
         done()
       })
